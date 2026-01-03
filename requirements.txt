@@ -1,0 +1,24 @@
+# Recipe Assistant Chatbot - Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# PDF Processing
+PyPDF2==3.0.1
+
+# Text Processing
+cleantext==1.1.4
+langchain==0.3.16
+langchain-text-splitters==0.3.6
+
+# Vector Database & Embeddings
+chromadb==0.6.9
+sentence-transformers==3.3.0
+
+# LLM Integration
+ollama==0.6.1
+
+# Web Interface
+streamlit==1.52.2
+
+# Utilities
+numpy==1.26.4
+tqdm==4.67.1
