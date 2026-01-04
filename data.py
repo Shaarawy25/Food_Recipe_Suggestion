@@ -50,7 +50,7 @@ def extract_recipe_metadata(text: str, source_file: str) -> Dict:
         if any(skip in line_lower for skip in ['table of contents', 'copyright', 'author', 
                                                 'cookbook', 'recipe book', 'page', 'chapter']):
             continue
-        if 15 <= len(line) <= 60 and not any(char in line for char in ['©', '®', '™']):
+        if 15 <= len(line) <= 60 :
             recipe_title = line
             break
     
