@@ -31,14 +31,14 @@ User receives answer
 
 ### 1. LLM Selection: Llama 3.2 3B
 **Why Llama 3.2 3B?**
-- **Local execution**: No API costs, complete data privacy
-- **Speed**: 3B model generates responses in ~1.5 seconds
+- **Local execution**: No API costs
+- **Speed**: model generates responses quickly
 - **Quality**: Good instruction following
 - **Size**: 2GB download, runs on standard laptops
 
 **Alternatives considered:**
-- GPT-4 API: $0.03/request, requires internet, privacy concerns
-- Llama 3.1 8B: Slower (4-5s response time), higher memory usage
+- GPT-4 API: costs money per token, requires internet
+- Llama 3.1 8B: Slower than 3.2, higher memory usage
 - Gemma 2B: Lower quality responses in testing
 
 ### 2. Vector Database: ChromaDB
@@ -65,7 +65,7 @@ User receives answer
 - **Robust**: Handles unicode, extra whitespace, special characters automatically
 - **Maintained**: Active library with proper case handling
 
-**Original approach:** Manual regex patterns → Failed on edge cases (recipes with unicode fractions, ingredient lists with special bullets)
+**Original approach:** Manual regex patterns → Failed on edge cases (recipes with unicode(1/2,1/3) fractions, ingredient lists with special bullets)
 
 ### 5. Guardrails Implementation
 **System Prompt Guardrails:**
@@ -147,7 +147,7 @@ The system logs all operations to the terminal:
 - Query received with timestamp
 - Number of contexts retrieved and their sources
 - Response generation status
--
+
 
 Example:
 ```
@@ -159,6 +159,5 @@ Example:
 
 ## Known Limitations
 1. **Retrieval quality**: Embeddings sometimes mix unrelated recipes (e.g., eggs + rice)
-2. **No recipe title extraction**: Metadata only includes source filename, not recipe names
 3. **Single language**: Only processes English cookbooks
 
