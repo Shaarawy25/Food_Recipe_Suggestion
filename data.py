@@ -74,30 +74,7 @@ def calculate_text_similarity(text1: str, text2: str) -> float:
     """Calculate similarity between two text chunks."""
     return SequenceMatcher(None, text1.lower(), text2.lower()).ratio()
 
-def deduplicate_chunks(chunks_data: List[Dict]) -> List[Dict]:
-    """Remove duplicate chunks."""
-    deduplicated = []
-    seen_hashes = set()
-    
-    for chunk_data in chunks_data:
-        chunk_text = chunk_data["text"]
-        chunk_hash = hashlib.md5(chunk_text.lower().encode()).hexdigest()
-        
-        if chunk_hash in seen_hashes:
-            continue
-        
-        is_duplicate = False
-        for existing_chunk in deduplicated[-10:]:
-            if calculate_text_similarity(chunk_text, existing_chunk["text"]) >= 0.85:
-                is_duplicate = True
-                break
-        
-        if not is_duplicate:
-            deduplicated.append(chunk_data)
-            seen_hashes.add(chunk_hash)
-    
-    print("Deduplication:", len(chunks_data), "->", len(deduplicated), "chunks")
-    return deduplicated
+
 
 def process_pdfs_in_directory(directory_path: str) -> Dict:
     """Process all PDF files and create chunks."""
@@ -138,14 +115,13 @@ def process_pdfs_in_directory(directory_path: str) -> Dict:
         else:
             print("  - No text extracted")
     
-    deduplicated_chunks = deduplicate_chunks(all_chunks)
     
     final_output = {
         "processed_pdfs": processed_data,
-        "all_chunks": deduplicated_chunks,
+        "all_chunks": all_chunks,
         "statistics": {
             "total_pdfs": len(processed_data),
-            "total_chunks": len(deduplicated_chunks)
+            "total_chunks": len(all_chunks)
         }
     }
     
@@ -154,7 +130,7 @@ def process_pdfs_in_directory(directory_path: str) -> Dict:
         json.dump(final_output, f, indent=2, ensure_ascii=False)
     
     print("Processed data saved to:", output_path)
-    print("Final chunks:", len(deduplicated_chunks))
+    print("Final chunks:", len(all_chunks))
     
     return final_output
 
